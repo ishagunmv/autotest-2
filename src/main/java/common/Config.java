@@ -5,6 +5,11 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 
 public class Config {
 
+    /** Выбор IP прибора */
+    public static final String DEVICE_IP = "";
+
+    /** Старт на локальном компьютере или в доккере */
+    public static final Boolean START_LOCAL = false;
     /** Выбор браузера для теста */
     public static final String BROWSER = "chrome"; //chrome firefox и т.д...
     /** Очистка куки и данных по завершению теста */
@@ -16,12 +21,6 @@ public class Config {
     /** Ожидание любого элемента по умолчавнию */
     public static final int TIMEOUT_ELEMENTS_MS = 60000;
 
-    /** Старт на локальном компьютере или в доккере */
-    public static final Boolean START_LOCAL = false;
-    /** URL до docker selenoid */
-    public static final String DOCKER = "http://192.168.2.92:4444/wd/hub";
-
-
 
     static {
         if (START_LOCAL) {
@@ -30,7 +29,7 @@ public class Config {
             Configuration.browser = BROWSER;
             Configuration.timeout = TIMEOUT_ELEMENTS_MS;
         } else {
-            Configuration.remote = DOCKER;
+            Configuration.remote = "http://192.168.2.92:4444/wd/hub";
             Configuration.browser = BROWSER;
             Configuration.timeout = TIMEOUT_ELEMENTS_MS;
             Configuration.holdBrowserOpen = HOLD_BROWSER_OPEN;

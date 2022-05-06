@@ -5,6 +5,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import pages.base.BasePage;
+import pages.webinterface.LoginPage;
+import pages.webinterface.MainMenuPage;
 
 
 import java.io.File;
@@ -19,6 +21,8 @@ public abstract class BaseTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BaseTest.class);
     protected BasePage basePage = new BasePage();
+    protected LoginPage loginPage = new LoginPage();
+    protected MainMenuPage mainMenuPage = new MainMenuPage();
 
 
     /** Очистка скриншотов и отчетов */
