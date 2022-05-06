@@ -3,20 +3,18 @@ package common;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.WebDriverRunner;
 import io.qameta.allure.Attachment;
-import org.junit.jupiter.api.extension.AfterEachCallback;
-import org.junit.jupiter.api.extension.BeforeAllCallback;
-import org.junit.jupiter.api.extension.ExtensionContext;
-import org.junit.jupiter.api.extension.TestWatcher;
+import org.junit.jupiter.api.extension.*;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import static common.CommonActions.clearBrowserCookieAndStorage;
+import static pages.base.BasePage.goToDevice;
 
 import static org.junit.jupiter.api.extension.ExtensionContext.Namespace.GLOBAL;
 
-public class Listener implements TestWatcher, BeforeAllCallback, AfterEachCallback {
+public class Listener implements TestWatcher, BeforeAllCallback, BeforeEachCallback, AfterEachCallback {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Listener.class);
 
@@ -24,6 +22,11 @@ public class Listener implements TestWatcher, BeforeAllCallback, AfterEachCallba
     public void beforeAll(ExtensionContext extensionContext) {
         extensionContext.getRoot().getStore(GLOBAL).put(true, this);
         }
+
+    @Override
+    public void beforeEach(ExtensionContext extensionContext) {
+        goToDevice();
+    }
 
     @Override
     public void afterEach(ExtensionContext extensionContext) {

@@ -2,9 +2,11 @@ package pages.base;
 
 import com.codeborne.selenide.*;
 import data.EPages;
+import data.EUsers;
 import org.openqa.selenium.Keys;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ssh.DeviceConnect;
 
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
@@ -15,7 +17,7 @@ public class BasePage {
     private static final Logger LOGGER = LoggerFactory.getLogger(BasePage.class);
 
     /** Методы перехода на страницы */
-    public void goToDevice() {
+    public static void goToDevice() {
         open("http://" + DEVICE_IP);
         LOGGER.info("Open device login page - " + DEVICE_IP);
     }
@@ -26,6 +28,11 @@ public class BasePage {
     }
     public void goToUrl(String url){
         open(url);
+    }
+
+    /** Метод коннекта по ssh */
+    public void connectSshDeviceIp(EUsers users) {
+        DeviceConnect connect = new DeviceConnect(DEVICE_IP, users);
     }
 
 
