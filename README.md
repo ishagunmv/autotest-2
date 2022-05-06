@@ -1,10 +1,4 @@
-# maven-selenide-junit
+# autotest-2
 
-PageObject
-Selenide
-Selenoid
-JUnit
-Allure
-Maven
-Jenkins-build
+Конфиг для запуска находится тут:
 */src/main/common/Config.java
