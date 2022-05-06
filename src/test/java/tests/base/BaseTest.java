@@ -5,7 +5,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import pages.base.BasePage;
-import pages.jenkins.JenkinsPage;
 
 
 import java.io.File;
@@ -20,7 +19,6 @@ public abstract class BaseTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BaseTest.class);
     protected BasePage basePage = new BasePage();
-    protected JenkinsPage jenkinsPage = new JenkinsPage();
 
 
     /** Очистка скриншотов и отчетов */
