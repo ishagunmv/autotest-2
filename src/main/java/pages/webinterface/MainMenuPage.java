@@ -1,5 +1,6 @@
 package pages.webinterface;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 
 import data.EPages;
@@ -9,14 +10,21 @@ import static com.codeborne.selenide.Selenide.$x;
 
 public class MainMenuPage extends BasePage {
 
-    /** xpath */
+    /** Метод перехода на страницу через click по xpath  */
+    public void goDevicePageXpath(EPages pages) {
+        $x(pages.getXpathPage()).shouldBe(Condition.visible).click();
+    }
+
     /** метод вызова xpath EPages */
     public void pagesXpath(EPages pages) {
        $x(pages.getXpathPage());
     }
 
+    public void logoutUser(){
+        exit.shouldBe(Condition.visible).click();
+    }
 
-    /** Шапка */
+    /** Остальные xpath */
     public final SelenideElement profile = $x("//span/a[contains(text(), 'Профиль')]");
     public final SelenideElement exit = $x("//span/a[contains(text(), 'Выход')]");
     public final SelenideElement aboutDevice = $x("//span/a[contains(text(), 'Об устройстве')]");

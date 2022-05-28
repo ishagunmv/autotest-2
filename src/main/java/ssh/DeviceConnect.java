@@ -77,7 +77,7 @@ public class DeviceConnect {
             err.printStackTrace();
         }
         this.disconnectSession();
-        //LogMessages.logInfo("Executed");
+//        LOGGER.info("Executed");
         return buffer.toString().split("VALUE=")[1].replace("\n", "").replace("\r", "");
     }
 
@@ -119,7 +119,7 @@ public class DeviceConnect {
      * Выполнение команды на сервере.
      */
     public String executeCommand(String command) {
-        LOGGER.info("SSH command: '%s'", command);
+        LOGGER.info("SSH command: " + command);
         StringBuilder buffer = new StringBuilder();
         try {
             this.connectSession();
@@ -153,7 +153,7 @@ public class DeviceConnect {
             err.printStackTrace();
         }
         this.disconnectSession();
-        //LogMessages.logInfo("Executed");
+//        LOGGER.info("Executed");
         return buffer.toString();
     }
 
@@ -165,10 +165,10 @@ public class DeviceConnect {
     public String getValueFromSql(String variable) {
         String[] results = executeCommand(
                 String.format(
-                        "sqlite3 /tftpboot/boot/conf/kris.sql3 \"select tValue  from tblSettings WHERE tName='%s' \"",
+                        "sqlite3 /tftpboot/boot/conf/kris.sql3 \"select tValue  from tblSettings WHERE tName='%s'\"",
                         variable)
         ).split("\n");
-        if (results.length  > 1){
+        if (results.length  == 0){     // if (results.length  > 1)
             return "";
         }
         return results[0];

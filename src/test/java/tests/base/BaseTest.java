@@ -1,12 +1,16 @@
 package tests.base;
 
+import data.EUsers;
 import org.junit.jupiter.api.TestInstance;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import pages.base.BasePage;
 import pages.webinterface.LoginPage;
+import pages.webinterface.ConfigFixingPage;
 import pages.webinterface.MainMenuPage;
+import pages.webinterface.SystemRebootPage;
+import ssh.DeviceConnect;
 
 
 import java.io.File;
@@ -20,9 +24,12 @@ import static common.Config.*;
 public abstract class BaseTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BaseTest.class);
+    protected static DeviceConnect deviceConnect = new DeviceConnect(DEVICE_IP, EUsers.system);
     protected BasePage basePage = new BasePage();
     protected LoginPage loginPage = new LoginPage();
     protected MainMenuPage mainMenuPage = new MainMenuPage();
+    protected ConfigFixingPage configFixingPage = new ConfigFixingPage();
+    protected SystemRebootPage systemRebootPage = new SystemRebootPage();
 
 
     /** Очистка скриншотов и отчетов */
@@ -40,6 +47,18 @@ public abstract class BaseTest {
             File allureScreenshots = new File("build/reports/tests");
             for (File item : Objects.requireNonNull(allureScreenshots.listFiles()))
                 item.delete();
+        }
+    }
+
+    /** бекап базы */
+    static {
+        try {
+            LOGGER.info("Start backup kris.sql3");
+            deviceConnect.executeCommand("mkdir /tftpboot/boot/conf/backup");
+            deviceConnect.executeCommand("cp /tftpboot/boot/conf/kris.sql3 /tftpboot/boot/conf/backup/kris.sql3");
+            LOGGER.info("Backup kris.sql3 successfully");
+        } catch (Exception e) {
+            LOGGER.error("Fail to backupKrisBeforeTests() - {}" + e.getMessage());
         }
     }
 }
