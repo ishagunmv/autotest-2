@@ -174,6 +174,38 @@ public class DeviceConnect {
         return results[0];
     }
 
+    public String getValueFromSocket(String value, int port) {
+        StringBuilder buffer = new StringBuilder();
+        String command = String.format("echo -e 'PROTOCOL 1\n%s' | nc 0 %d -w 1 | grep -v PHRP", value, port);
+        try {
+            this.connectSession();
+            ChannelExec exec = (ChannelExec) session.openChannel("exec");
+            exec.setCommand(command);
+            LOGGER.info("SSH command: " + command);
+            exec.setInputStream(null);
+            InputStream in = exec.getInputStream();
+            exec.connect();
+            BufferedReader buffReader = new BufferedReader(new InputStreamReader(in, "UTF-8"));
+            while (true) {
+                String str;
+                while ((str = buffReader.readLine()) != null) {
+                    buffer.append(str).append("\n");
+                }
+                if (exec.isClosed()) {
+                    if (in.available() > 0) {
+                        continue;
+                    }
+                    break;
+                }
+            }
+        } catch (Exception err) {
+            err.printStackTrace();
+        }
+        this.disconnectSession();
+//        LOGGER.info("Executed");
+        return buffer.toString().replace("\n", "").replace("\r", "");
+    }
+
     public void setPort(int port) {
         this.port = port;
     }
