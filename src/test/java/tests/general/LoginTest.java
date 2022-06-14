@@ -5,6 +5,7 @@ import common.Listener;
 import data.EUsers;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import tests.base.BaseTest;
@@ -16,6 +17,11 @@ import tests.base.BaseTest;
 @ExtendWith(Listener.class)
 
 public class LoginTest extends BaseTest {
+
+    @BeforeEach
+    void goDevice(){
+        basePage.goDevice();
+    }
 
     /** positive */
     @Test

@@ -10,7 +10,6 @@ import pages.webinterface.LoginPage;
 import pages.webinterface.SystemRebootPage;
 import ssh.DeviceConnect;
 
-import static com.codeborne.selenide.Selenide.open;
 import static com.codeborne.selenide.Selenide.sleep;
 import static common.Config.*;
 
@@ -39,24 +38,17 @@ public class CommonActions {
         }
     }
 
-    /** Метод перехода на прибор */
-    public static void goDeviceAllTests() {
-        open("http://" + DEVICE_IP);
-        loginPage.waitLoadLoginPage();
-        LOGGER.info("Open device login page - " + DEVICE_IP);
-    }
-
     /** Методы работы с базой */
     public static void dropKrisSql() {
         if (DROP_KRIS_SQL){
             try {
                 LOGGER.info("Start drop kris.sql3");
                 deviceConnect.executeCommand("sqlite3 /tftpboot/boot/conf/kris.sql3 'delete from tblSettings'");
-                goDeviceAllTests();
+                basePage.goDevice();
                 loginPage.loginUser(EUsers.system);
                 basePage.goDevicePageUrl(EPages.system_reboot);
-                LOGGER.info("Reboot device...");
                 systemRebootPage.insertSecurityAndReboot();
+                basePage.waitRebootSystem(0);
                 LOGGER.info("Drop kris.sql3 successfully");
             } catch (Exception e) {
                 LOGGER.error("Fail to dropKrisSql() - {}" + e.getMessage());
@@ -69,12 +61,11 @@ public class CommonActions {
             try {
                 LOGGER.info("Start restore kris.sql3");
                 deviceConnect.executeCommand("cp /tftpboot/boot/conf/backup/kris.sql3 /tftpboot/boot/conf/kris.sql3");
-
-                goDeviceAllTests();
+                basePage.goDevice();
                 loginPage.loginUser(EUsers.system);
                 basePage.goDevicePageUrl(EPages.system_reboot);
-                LOGGER.info("Reboot device...");
                 systemRebootPage.insertSecurityAndReboot();
+                basePage.waitRebootSystem(0);
                 LOGGER.info("Restore kris.sql3 successfully");
             } catch (Exception e) {
                 LOGGER.error("Fail to restoreKrisAfterTests() - {}" + e.getMessage());

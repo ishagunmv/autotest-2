@@ -20,7 +20,8 @@ public class ConfigFixingTest extends BaseTest{
 
 
     @BeforeEach
-    void beforeEach(){
+    void login(){
+        basePage.goDevice();
         loginPage.loginUser(EUsers.system);
         basePage.goDevicePageUrl(EPages.config_fixing);
     }
@@ -261,7 +262,7 @@ public class ConfigFixingTest extends BaseTest{
 
 
     @AfterEach
-    void logoutUser(){
+    void logout(){
         mainMenuPage.logoutUser();
     }
 }

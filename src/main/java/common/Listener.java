@@ -22,7 +22,6 @@ public class Listener implements TestWatcher, BeforeAllCallback, BeforeEachCallb
 
     @Override
     public void beforeEach(ExtensionContext extensionContext) {
-        goDeviceAllTests();
     }
 
     @Override

@@ -36,19 +36,14 @@ public class Config {
 
 
     static {
-        if (!START_SELENOID) {
-            Configuration.reportsFolder = "build/reports/tests";
-            Configuration.browser = BROWSER;
-            Configuration.timeout = TIMEOUT_ELEMENTS_MS;
-            Configuration.pageLoadTimeout = TIMEOUT_PAGE_LOAD_MS;
-            Configuration.holdBrowserOpen = HOLD_BROWSER_OPEN;
-        } else {
+        Configuration.browser = BROWSER;
+        Configuration.timeout = TIMEOUT_ELEMENTS_MS;
+        Configuration.pageLoadTimeout = TIMEOUT_PAGE_LOAD_MS;
+        Configuration.holdBrowserOpen = HOLD_BROWSER_OPEN;
+        Configuration.reportsFolder = "build/reports/tests";
+
+        if (START_SELENOID) {
             Configuration.remote = "http://192.168.2.92:4444/wd/hub";
-            Configuration.browser = BROWSER;
-            Configuration.timeout = TIMEOUT_ELEMENTS_MS;
-            Configuration.pageLoadTimeout = TIMEOUT_PAGE_LOAD_MS;
-            Configuration.holdBrowserOpen = HOLD_BROWSER_OPEN;
-            Configuration.reportsFolder = "build/reports/tests";
             DesiredCapabilities capabilities = new DesiredCapabilities();
             capabilities.setCapability("enableVNC", true);
             capabilities.setCapability("enableVideo", true);

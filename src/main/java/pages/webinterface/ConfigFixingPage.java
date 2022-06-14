@@ -228,5 +228,5 @@ public class ConfigFixingPage extends BasePage {
     private final SelenideElement inputImageSize0 = $x("//input[@name='image_size[0]']");
     private final SelenideElement inputImageSize1 = $x("//input[@name='image_size[1]']");
     private final SelenideElement nextButtonImageSize = $x("//td[@colspan='2']//input[@type='submit']");
-    private final SelenideElement saveButtonImageSize = $x("//input[@type='submit' and @class='fbutton']");
+    private final SelenideElement saveButtonImageSize = $x("(//input[@type='submit' and @class='fbutton'])[last()]");
 }
