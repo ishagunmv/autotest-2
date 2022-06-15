@@ -171,12 +171,23 @@ public class DeviceConnect {
         if (results.length  == 0){     // if (results.length  > 1)
             return "";
         }
+        LOGGER.info("Result SSH command: " + results[0]);
         return results[0];
     }
 
-    public String getValueFromSocket(String value, int port) {
-        StringBuilder buffer = new StringBuilder();
+    public String getValueFromSocketWithProtocol(String value, int port){
         String command = String.format("echo -e 'PROTOCOL 1\n%s' | nc 0 %d -w 1 | grep -v PHRP", value, port);
+        return getValueFromSocket(command);
+    }
+
+    public String getValueFromSocketWithoutProtocol(String value, int port){
+        String command = String.format("echo -e '%s' | nc 0 %d -w 1", value, port);
+        return getValueFromSocket(command);
+    }
+
+    private String getValueFromSocket(String command) {
+        StringBuilder buffer = new StringBuilder();
+        String result;
         try {
             this.connectSession();
             ChannelExec exec = (ChannelExec) session.openChannel("exec");
@@ -186,17 +197,9 @@ public class DeviceConnect {
             InputStream in = exec.getInputStream();
             exec.connect();
             BufferedReader buffReader = new BufferedReader(new InputStreamReader(in, "UTF-8"));
-            while (true) {
-                String str;
-                while ((str = buffReader.readLine()) != null) {
-                    buffer.append(str).append("\n");
-                }
-                if (exec.isClosed()) {
-                    if (in.available() > 0) {
-                        continue;
-                    }
-                    break;
-                }
+            while ((result = buffReader.readLine()) != null) {
+                buffer.append(result).append("\n");
+                LOGGER.info("Result SSH command: " + result);
             }
         } catch (Exception err) {
             err.printStackTrace();
