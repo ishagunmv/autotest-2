@@ -1,10 +1,16 @@
 package data;
 
-
 public class Constant {
 
     public static class Data {
         public static final String SECURITY_CODE = "123";
+    }
+
+    public static class Tags {
+        public static final String ALL = "ALL";
+        public static final String ARTERIA = "ARTERIA";
+        public static final String ARIA = "ARIA";
+        public static final String CROSS = "X86-64";
     }
 
     public static class JenkinsParameters {

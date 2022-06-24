@@ -6,10 +6,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import pages.base.BasePage;
-import pages.webinterface.LoginPage;
-import pages.webinterface.ConfigFixingPage;
-import pages.webinterface.MainMenuPage;
-import pages.webinterface.SystemRebootPage;
+import pages.webinterface.main_menu.LoginPage;
+import pages.webinterface.config_fixing.ConfigFixingPage;
+import pages.webinterface.main_menu.MainMenuPage;
+import pages.webinterface.system_reboot.SystemRebootPage;
 import ssh.DeviceConnect;
 
 

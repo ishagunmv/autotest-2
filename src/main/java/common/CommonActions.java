@@ -6,8 +6,8 @@ import data.EUsers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pages.base.BasePage;
-import pages.webinterface.LoginPage;
-import pages.webinterface.SystemRebootPage;
+import pages.webinterface.main_menu.LoginPage;
+import pages.webinterface.system_reboot.SystemRebootPage;
 import ssh.DeviceConnect;
 
 import static com.codeborne.selenide.Selenide.sleep;

@@ -27,16 +27,13 @@
 
 ##### Дерево страниц <a name="structure_page"></a>
 * `src/main/pages`
-    * `/webinterface/{страница}` - пример [LoginPage.java](src/main/java/pages/webinterface/LoginPage.java)
-    * `/webapps/{страница}`
-        * `/popup/{поп-ап}`
+    * `/webinterface/{страница}/` - пример [LoginPage.java](src/main/java/pages/webinterface/LoginPage.java)
+    * `/webapps/{страница}/`
 
 ##### Дерево тестов <a name="structure_test"></a>
 * `src/test/java/tests`
-    * `/general/{тесты}` - пример [LoginTest.java](src/test/java/tests/general/LoginTest.java)
-    * `/arch/`
-        * `/webintarface/{тесты}`
-        * `/webapps/{тесты}`
+    * `/webintarface/{тесты}` - пример [LoginTest.java](src/test/java/tests/general/LoginTest.java)
+    * `/webapps/{тесты}`
 
 ##### Описание директорий проекта <a name="structure_package"></a>
 | Директория | Полный путь                                                | Описание                                                                                                                                                |
@@ -45,9 +42,8 @@
 | `data`     | [src/main/java/data](src/main/java/data)                   | Тестовые данные. Классы перечислений Enums.                                                                                                             |
 | `pages`    | [src/main/java/pages](src/main/java/pages)                 | Содержит классы описания страниц. Вложенные директории: `base`- содержит базовый `Page` класс. `webinterface`, `webapps` - содержат все классы страниц. |
 | `ssh`      | [src/main/java/ssh](src/main/java/ssh)                     | Директория с работой ssh-менеджера.                                                                                                                     |
-| `arch`     | [src/test/java/tests/arch](src/test/java/tests/arch)       | Основная директория тестов для каждой архитектуры. Внутри `package` для каждой архитектуры с разделением на `webinterface` и `webapps`.                 |
+| `tests`     | [src/test/java/tests](src/test/java/tests)       | Основная директория тестов. Внутри `package` с разделением на `webinterface` и `webapps`, а так-же `base` и `suite`.                 |
 | `base`     | [src/test/java/tests/base](src/test/java/tests/base)       | Содержит базовый класс `BaseTest`.                                                                                                                      |
-| `general`  | [src/test/java/tests/general](src/test/java/tests/general) | Директория для общих тестовых классов, которые можно гонять на всех архитектурах.                                                                       |
 | `suite`    | [src/test/java/tests/suite](src/test/java/tests/suite)     | Содержит классы тестовых пакетов для архитектур. Именно тестовые пакеты запукаются при прогоне какой-либо архитектуры.                                  |
 
 ##### Удаленный сервер и контейнеризация <a name="structure_jenkins"></a>
@@ -96,7 +92,7 @@ public class SystemRebootPage extends BasePage {
 
 ##### Класс описывающий тесты <a name="create_test"></a>
 Имена для тестовых классов используются аналогичными pages, но заканчивают свое название на `Test`. Необходимо определиться с архитектурой для которой пишутся тесты, создать `java` класс и наследоваться от [BaseTest](src/test/java/tests/base/BaseTest.java).
-Нужно будет добавить аннотацию `junit`, которой наследуется жизненный цикл теста `@ExtendWith(Listener.class)`. Дополнительно нужны будут аннотации, которые будут содержать краткое описание класса, для отчетов.
+Нужно будет добавить аннотацию `junit`, которой наследуется жизненный цикл теста `@ExtendWith(Listener.class)`. Дополнительно нужны будут аннотации, которые будут содержать краткое описание класса, для отчетов. Каждому тесту необходим тег(и), которые соответствуют архитектуре.
 
 ###### Пример
 ```java
@@ -120,7 +116,7 @@ public class LoginTest extends BaseTest {
 ### Добавление тестовых пакетов <a name="create_test_suite"></a>
 Все пакеты тестов лежат в директории [suite](src/test/java/tests/suite).
 Для того, чтобы добавить новый пакет тестов, необходимо добавить класс, с соответствующим названием. В данный момент пакеты у нас разбиты по архитектурам приборов.
-В классе необходимо указать директории или классы которые будет включать в себя пакет.
+В классе необходимо указать директорию для тестов и теги, которые будет включать в себя пакет.
 
 ###### Пример
 ```java
@@ -129,13 +125,11 @@ package tests.suite;
 import org.junit.platform.suite.api.SelectPackages;
 import org.junit.platform.suite.api.Suite;
 
-@SelectPackages({
-        "tests.general",
-        "tests.arch.x86_64"
-})
+@SelectPackages("tests.webinterface")
 @Suite
+@IncludeTags({ALL, CROSS})
 
-public class X86_64Suite {
+public class CrossSuite {
 }
 ```
 Затем в файле [pom.xml](pom.xml) необходимо его добавить в плагин `maven-surefire` в тег `include`.
@@ -146,13 +140,13 @@ public class X86_64Suite {
   <version>3.0.0-M6</version>
   <configuration>
     <includes>
-      <include>X86_64Suite.java</include>
+      <include>CrossSuite.java</include>
       <include>AriaSuite.java</include>
       <include>ArteriaSuite.java</include>
     </includes>
   </configuration>
 </plugin>
 ```
-Запуск пакета осуществляется передачей параметра в maven `-Dtest={имя пакета}`. Например команда для старта пакета может выглядеть так: `mvn clean test -Dtest=X86_64Suite`.
+Запуск пакета осуществляется передачей параметра в maven `-Dtest={имя пакета}`. Например команда для старта пакета может выглядеть так: `mvn clean test -Dtest=CrossSuite`.
 
 [В начало](#header)

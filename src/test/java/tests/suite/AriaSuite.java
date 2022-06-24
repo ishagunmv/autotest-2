@@ -1,13 +1,14 @@
 package tests.suite;
 
+import org.junit.platform.suite.api.IncludeTags;
 import org.junit.platform.suite.api.SelectPackages;
 import org.junit.platform.suite.api.Suite;
 
-@SelectPackages({
-        "tests.general",
-        "tests.arch.aria"
-})
+import static data.Constant.Tags.*;
+
+@SelectPackages("tests.webinterface")
 @Suite
+@IncludeTags({ALL, ARIA})
 
 public class AriaSuite {
 }
