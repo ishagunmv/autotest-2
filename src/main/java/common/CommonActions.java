@@ -23,8 +23,10 @@ public class CommonActions {
     private static final Logger LOGGER = LoggerFactory.getLogger(CommonActions.class);
 
 
-    /** Метод удаления данных с браузера */
-    public static void clearBrowserCookieAndStorage(){
+    /**
+     * Метод удаления данных с браузера
+     */
+    public static void clearBrowserCookieAndStorage() {
         if (CLEAR_COOKIES) {
             try {
                 LOGGER.info("Start clear cookie and storage browser");
@@ -38,9 +40,11 @@ public class CommonActions {
         }
     }
 
-    /** Методы работы с базой */
+    /**
+     * Методы работы с базой
+     */
     public static void dropKrisSql() {
-        if (DROP_KRIS_SQL){
+        if (DROP_KRIS_SQL) {
             try {
                 LOGGER.info("Start drop kris.sql3");
                 deviceConnect.executeCommand("sqlite3 /tftpboot/boot/conf/kris.sql3 'delete from tblSettings'");
@@ -57,7 +61,7 @@ public class CommonActions {
     }
 
     public static void restoreKrisAfterTests() {
-        if(RESTORE_KRIS_SQL){
+        if (RESTORE_KRIS_SQL) {
             try {
                 LOGGER.info("Start restore kris.sql3");
                 deviceConnect.executeCommand("cp /tftpboot/boot/conf/backup/kris.sql3 /tftpboot/boot/conf/kris.sql3");

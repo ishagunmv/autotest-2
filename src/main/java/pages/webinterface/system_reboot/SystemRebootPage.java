@@ -15,13 +15,15 @@ public class SystemRebootPage extends BasePage {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SystemRebootPage.class);
 
-    public void insertSecurityAndReboot(){
+    public void insertSecurityAndReboot() {
         securityCodeInput.shouldBe(Condition.visible).setValue(SECURITY_CODE);
         rebootButton.shouldBe(Condition.visible).click();
         LOGGER.info("Start reboot");
     }
 
-    /** xpath */
+    /**
+     * xpath
+     */
     private final SelenideElement securityCodeInput = $(By.name("security_code"));
     private final SelenideElement rebootButton = $x("//input[@value='Перезагрузить сейчас']");
 }

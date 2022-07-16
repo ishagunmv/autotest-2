@@ -20,6 +20,7 @@ public enum EPages {
     config_fixing           ("Фотофиксация", "config_fixing.php" ,"//dd/a[@href='config_fixing.php' and contains(text(), 'Фотофиксация')]"),
     app_mounting            ("Монтаж устройства", "app_mounting.php", "//dd/a[contains(text(), 'Монтаж устройства')]"),
     app_traffic_lanes       ("Полосы движения", "app_traffic_lanes.php", "//dd/a[contains(text(), 'Полосы движения')]"),
+    system_firmware         ("Прошивка устройства", "system_firmware.php", "//dd/a[contains(text(), 'Прошивка устройства')]"),
     system_reboot           ("Перезагрузка системы", "system_reboot.php", "//dd/a[contains(text(), 'Перезагрузка системы')]");
 
     public String getUrlPage() {

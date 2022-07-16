@@ -16,10 +16,13 @@ public class Config {
     /** Выбор браузера для теста */
     public static final String BROWSER = JENKINS_BROWSER; //chrome firefox и т.д...
 
+    /** Прошивка прибора */
+    public static final Boolean FLASHING = true; //перепрошивка прибора
+    public static final String BRANCH = "5.22"; //версия прошивки
+
     /** Работа с базой */
     public static final Boolean DROP_KRIS_SQL = JENKINS_DROP_KRIS_SQL; //очистка базы перед началом тестов
     public static final Boolean RESTORE_KRIS_SQL = JENKINS_RESTORE_KRIS_SQL; //восстановление базы по окончанию тестов
-
 
     /** Очистка куки и данных по завершению теста */
     public static final Boolean CLEAR_COOKIES = true;
@@ -28,7 +31,7 @@ public class Config {
     public static final Boolean HOLD_BROWSER_OPEN = false;
 
     /** Очистка директории скриншотов перед стартом теста */
-    public static final Boolean CLEAR_REPORTS_DIR = false;
+    public static final Boolean CLEAR_REPORTS_DIR = true;
 
     /** Ожидание любого элемента по умолчанию */
     public static final int TIMEOUT_ELEMENTS_MS = 60000;
